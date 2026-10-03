@@ -1595,7 +1595,7 @@ function AuthScreen(props) {
             )}
 
             {error && <div className="alert danger">{error}</div>}
-            {message && <div className="alert success">{message}</div>}
+            {message && <div className="alert success order-success">{message}</div>}
 
             <button className="btn primary full" type="submit">
               {isRegister ? "Create Account" : "Sign In"}
@@ -3168,16 +3168,18 @@ function CustomerDashboard({
             <h1>
               {section === "marketplace" && "Marketplace"}
               {section === "my-orders" && "My Orders"}
+              {section === "profile" && "Profile"}
               {section === "support" && "Help & Support"}
             </h1>
             <p>
               {section === "marketplace" && "Discover products from LocalShop merchants."}
               {section === "my-orders" && "Track your LocalShop purchases live."}
+              {section === "profile" && "Manage your LocalShop profile."}
               {section === "support" && "Get help from LocalShop support."}
             </p>
           </div>
           <button
-            className="btn primary cart-btn"
+           className={`btn primary cart-btn ${cart.length > 0 ? "cart-bounce" : ""}`}
             onClick={() => setCheckoutOpen(true)}
           >
             Cart
@@ -3334,46 +3336,7 @@ function CustomerDashboard({
 
         {/* Support */}
         {section === "support" && <SupportLinks />}
-{/* Profile */}
-{section === "profile" && (
-  <section className="profile-page">
-    <div className="profile-hero">
-      <div className="profile-avatar">
-        {(profile?.name || profile?.email || "U")
-          .charAt(0)
-          .toUpperCase()}
-      </div>
 
-      <div>
-        <span className="product-eyebrow">LOCALSHOP CUSTOMER</span>
-        <h2>{profile?.name || "Customer"}</h2>
-        <p>{profile?.email || "No email available"}</p>
-      </div>
-    </div>
-
-    <div className="profile-info-grid">
-      <div className="profile-info-card">
-        <span>Full Name</span>
-        <strong>{profile?.name || "Not added"}</strong>
-      </div>
-
-      <div className="profile-info-card">
-        <span>Email</span>
-        <strong>{profile?.email || "Not available"}</strong>
-      </div>
-
-      <div className="profile-info-card">
-        <span>Account Type</span>
-        <strong>Customer</strong>
-      </div>
-
-      <div className="profile-info-card">
-        <span>Account Status</span>
-        <strong>Active</strong>
-      </div>
-    </div>
-  </section>
-)}
         {/* Tracking Modal (live) */}
         {trackingOrder && (
           <Modal title={`Track Order #${trackingOrder.id.slice(0, 8)}`} onClose={() => setTrackingOrder(null)}>
