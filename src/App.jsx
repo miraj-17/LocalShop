@@ -2650,6 +2650,7 @@ function MerchantDashboard(props) {
             ["orders", "Orders"],
             ["sales", "Sales"],
             ["support", "Help & Support"],
+            ["profile", "Profile"],
           ].map(([id, label]) => (
             <button
               key={id}
@@ -3137,6 +3138,7 @@ function CustomerDashboard({
           {[
             ["marketplace", "Marketplace"],
             ["my-orders", "My Orders"],
+            ["profile", "Profile"],
             ["support", "Help & Support"],
           ].map(([id, label]) => (
             <button
@@ -3289,9 +3291,89 @@ function CustomerDashboard({
           </div>
         )}
 
+{/* Profile */}
+{section === "profile" && (
+  <section className="profile-page">
+    <div className="profile-hero">
+      <div className="profile-avatar">
+        {(profile.name || profile.email || "U")
+          .charAt(0)
+          .toUpperCase()}
+      </div>
+
+      <div>
+        <span className="product-eyebrow">LOCALSHOP CUSTOMER</span>
+        <h2>{profile.name || "Customer"}</h2>
+        <p>{profile.email || "No email available"}</p>
+      </div>
+    </div>
+
+    <div className="profile-info-grid">
+      <div className="profile-info-card">
+        <span>Full Name</span>
+        <strong>{profile.name || "Not added"}</strong>
+      </div>
+
+      <div className="profile-info-card">
+        <span>Email</span>
+        <strong>{profile.email || "Not available"}</strong>
+      </div>
+
+      <div className="profile-info-card">
+        <span>Account Type</span>
+        <strong>Customer</strong>
+      </div>
+
+      <div className="profile-info-card">
+        <span>Account Status</span>
+        <strong>Active</strong>
+      </div>
+    </div>
+  </section>
+)}
+
         {/* Support */}
         {section === "support" && <SupportLinks />}
+{/* Profile */}
+{section === "profile" && (
+  <section className="profile-page">
+    <div className="profile-hero">
+      <div className="profile-avatar">
+        {(profile?.name || profile?.email || "U")
+          .charAt(0)
+          .toUpperCase()}
+      </div>
 
+      <div>
+        <span className="product-eyebrow">LOCALSHOP CUSTOMER</span>
+        <h2>{profile?.name || "Customer"}</h2>
+        <p>{profile?.email || "No email available"}</p>
+      </div>
+    </div>
+
+    <div className="profile-info-grid">
+      <div className="profile-info-card">
+        <span>Full Name</span>
+        <strong>{profile?.name || "Not added"}</strong>
+      </div>
+
+      <div className="profile-info-card">
+        <span>Email</span>
+        <strong>{profile?.email || "Not available"}</strong>
+      </div>
+
+      <div className="profile-info-card">
+        <span>Account Type</span>
+        <strong>Customer</strong>
+      </div>
+
+      <div className="profile-info-card">
+        <span>Account Status</span>
+        <strong>Active</strong>
+      </div>
+    </div>
+  </section>
+)}
         {/* Tracking Modal (live) */}
         {trackingOrder && (
           <Modal title={`Track Order #${trackingOrder.id.slice(0, 8)}`} onClose={() => setTrackingOrder(null)}>
@@ -4731,6 +4813,150 @@ tr:last-child td {
 
 @keyframes spin {
   to { transform: rotate(360deg); }
+}
+
+
+/* =========================
+   PROFILE PAGE
+========================= */
+
+.profile-page {
+  animation: profilePageIn 0.55s ease both;
+}
+
+.profile-hero {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  padding: 32px;
+  margin-bottom: 24px;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.profile-hero::before {
+  content: "";
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  right: -60px;
+  top: -80px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.12;
+  filter: blur(20px);
+}
+
+.profile-avatar {
+  width: 82px;
+  height: 82px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 24px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: #fff;
+  font-size: 30px;
+  font-weight: 800;
+  box-shadow: 0 12px 30px rgba(109, 93, 252, 0.25);
+  animation: profileAvatarIn 0.7s ease both;
+}
+
+.profile-hero h2 {
+  margin: 4px 0 2px;
+  font-size: 30px;
+  letter-spacing: -0.04em;
+}
+
+.profile-hero p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.profile-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.profile-info-card {
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--surface);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  animation: profileCardIn 0.5s ease both;
+}
+
+.profile-info-card:nth-child(2) {
+  animation-delay: 0.08s;
+}
+
+.profile-info-card:nth-child(3) {
+  animation-delay: 0.16s;
+}
+
+.profile-info-card:nth-child(4) {
+  animation-delay: 0.24s;
+}
+
+.profile-info-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow);
+}
+
+.profile-info-card span {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.profile-info-card strong {
+  font-size: 16px;
+}
+
+@keyframes profilePageIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes profileAvatarIn {
+  from {
+    opacity: 0;
+    transform: scale(0.7) rotate(-8deg);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+  }
+}
+
+@keyframes profileCardIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ── Responsive ── */
